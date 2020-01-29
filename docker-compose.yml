@@ -15,9 +15,8 @@ services:
     depends_on:
       - db
     build: .
-    environment:
-      DB: db
-      SENSOR: "http://192.168.51.55"
+    DB: db
+    SENSOR: "http://192.168.51.55"
     restart: unless-stopped
 
   # phpmyadmin
