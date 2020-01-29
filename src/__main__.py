@@ -1,6 +1,7 @@
 import mysql.connector
 import requests
 import argparse
+import time
 
 
 class Database:
@@ -47,8 +48,10 @@ def main():
     roof_sensor = Satellite(str(args.sensor))
     server = Database(str(args.db))
 
-    server.saveTemperature(roof_sensor.getTemperature())
-    server.saveHumidity(roof_sensor.getHumidity())
+    while True:
+        server.saveTemperature(roof_sensor.getTemperature())
+        server.saveHumidity(roof_sensor.getHumidity())
+        time.sleep(5)
 
 
 if __name__ == "__main__":
