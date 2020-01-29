@@ -49,8 +49,11 @@ def main():
     server = Database(str(args.db))
 
     while True:
-        server.saveTemperature(roof_sensor.getTemperature())
-        server.saveHumidity(roof_sensor.getHumidity())
+        try:
+            server.saveTemperature(roof_sensor.getTemperature())
+            server.saveHumidity(roof_sensor.getHumidity())
+        except:
+            print("Sensor not found")
         time.sleep(5)
 
 
