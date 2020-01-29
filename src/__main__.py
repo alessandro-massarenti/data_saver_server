@@ -42,10 +42,11 @@ class Satellite:
 def main():
     parser = argparse.ArgumentParser(description='A tutorial of argparse!')
     parser.add_argument("-db", default="db", help="This is the 'a' variable")
+    parser.add_argument("-sensor")
 
     args = parser.parse_args()
 
-    roof_sensor = Satellite('http://192.168.51.55')
+    roof_sensor = Satellite(args.sensor)
     server = Database(args.db)
 
     server.saveTemperature(roof_sensor.getTemperature())
