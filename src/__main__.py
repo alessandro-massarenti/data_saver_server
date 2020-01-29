@@ -4,15 +4,13 @@ import argparse
 
 
 class Database:
-    def __init__(self, host):
+    def __init__(self, host: str):
         self.__server = mysql.connector.connect(
             host=host,
             user="sensingStation",
             passwd="8mUdOIU9I8Ws5Kc6",
             database="sensingStation"
         )
-
-    def __getCursor(self):
         self.__cursor = self.__server.cursor(prepared=True)
 
     def __saveData(self, signature, value: float):
@@ -46,8 +44,8 @@ def main():
 
     args = parser.parse_args()
 
-    roof_sensor = Satellite(args.sensor)
-    server = Database(args.db)
+    roof_sensor = Satellite(str(args.sensor))
+    server = Database(str(args.db))
 
     server.saveTemperature(roof_sensor.getTemperature())
     server.saveHumidity(roof_sensor.getHumidity())
