@@ -7,9 +7,9 @@ class Database:
     def __init__(self, host: str):
         self.__server = mysql.connector.connect(
             host=host,
-            user="sensingStation",
+            user="sensingstation",
             passwd="8mUdOIU9I8Ws5Kc6",
-            database="sensingStation"
+            database="sensingstation"
         )
         self.__cursor = self.__server.cursor(prepared=True)
 
