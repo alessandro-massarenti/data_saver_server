@@ -14,7 +14,7 @@ class Database:
         self.__cursor = self.__server.cursor(prepared=True)
 
     def __saveData(self, signature, value: float):
-        sql = "INSERT INTO data (sensor_signature, value) VALUES (%s, %s)"
+        sql = "INSERT INTO data (sensorsignature, value) VALUES (%s, %s)"
         val = (signature, value)
         self.__cursor.execute(sql, val)
         self.__server.commit()
