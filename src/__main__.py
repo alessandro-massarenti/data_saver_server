@@ -1,7 +1,10 @@
-import mysql.connector
-import requests
 import argparse
 import time
+from threading import Thread
+import _thread
+
+import mysql.connector
+import requests
 
 
 class Database:
@@ -38,6 +41,18 @@ class Satellite:
         return requests.get(self.url).json()['data']['humidity']
 
 
+def data_grappler(server, sensor,num):
+    while True:
+        try:
+            server.saveTemperature(sensor.getTemperature())
+            server.saveHumidity(sensor.getHumidity())
+            print("Dato letto")
+            print(num)
+        except:
+            print("Sensor not found")
+        time.sleep(3)
+
+
 def main():
     parser = argparse.ArgumentParser(description='A tutorial of argparse!')
     parser.add_argument("-db", default="db", help="This is the 'a' variable")
@@ -45,15 +60,13 @@ def main():
 
     args = parser.parse_args()
 
-    roof_sensor = Satellite(str(args.sensor))
     server = Database(str(args.db))
+    roof_sensor = Satellite(str(args.sensor))
 
+    _thread.start_new_thread(data_grappler, (server, roof_sensor, 1))
+
+    # Keep program alive
     while True:
-        try:
-            server.saveTemperature(roof_sensor.getTemperature())
-            server.saveHumidity(roof_sensor.getHumidity())
-        except:
-            print("Sensor not found")
         time.sleep(5)
 
 
